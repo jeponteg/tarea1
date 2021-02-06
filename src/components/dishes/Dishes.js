@@ -8,40 +8,43 @@ import Grid from '@material-ui/core/Grid';
 
 const Dishes = () => {
 
-    const [dishes , setDishes] = useState(dishData);
-    const [selected, setSelected] = useState([''])
-
+    const [dishes] = useState(dishData);
+    const [selected, setSelected] = useState(['']);
+    
     const handleChange = (item) => {
        const filteredDishes = dishes.filter((dish) => dish.cuisine === item);
        setSelected(filteredDishes)
     }
 
-
     return (
         
-    
         <div className ="contenedor">
            
-            { dishTitles.map( item => (
-                <Tab
-                    label= {item.name} 
-                    key={item.name} 
-                    onClick={() => handleChange(item.name)}
-                />
+            { dishTitles.map((item) => {
+                const {
+                    id,
+                    name,
+                } = item;
                 
-            )) }
+                return (
+                    <Tab
+                        key={id.toString()}
+                        label= {name} 
+                        onClick={() => handleChange(name)}
+                    /> 
+                )
+            })}
+
             <Grid
-            container
-            direction="row"
-            justify="center"
-            alignItems="center"
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
             >
-                { selected.map( item => (
-                    
-                        <DishesCard key={item.title} data={item.title} />
-                
-                )) }
+                <DishesCard selected={selected} /> 
+                  
             </Grid>
+
         </div>   
     )
 }
